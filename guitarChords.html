@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+	body{padding:0;margin:0;font-size:2.0em;}
+	select{font-size:2em;}
+</style>
+
+</head>
+<body>
+<p>Build your guitar chords here!</p>
+<canvas id="canvas" style="display:none;"></canvas>
+<img id="canvasImg" alt="Right click to save me!">
+<p id="altNoteNames"></p>
+<select id="chordName" onchange="drawChord();">
+  <option value="A">A</option>
+  <option value="A&#x266f;">A&#x266f;</option>
+    <option value="B&#x266d;">B&#x266d;</option>
+  <option value="B">B</option>
+  <option value="C">C</option>
+    <option value="C&#x266f;">C&#x266f;</option>
+    <option value="D&#x266d;">D&#x266d;</option>
+  <option value="D">D</option>
+<option value="D&#x266f;">D&#x266f;</option>
+    <option value="E&#x266d;">E&#x266d;</option>
+  <option value="E">E</option>
+  <option value="E&#x266f;">E&#x266f;</option>
+    <option value="F&#x266d;">F&#x266d;</option>
+  <option value="F">F</option>
+  <option value="F&#x266f;">F&#x266f;</option>
+    <option value="G&#x266d;">G&#x266d;</option>
+  <option value="G">G</option>
+  
+  <option value="G&#x266f;">G&#x266f;</option>
+  <option value="A&#x266d;">A&#x266d;</option>
+  <option value="">Blank</option>
+</select>
+<select id="chordSuffix" onchange="drawChord();">
+	<option value="">Blank</option>
+	<option>m</option>
+	<option>7</option>
+	<option>m7</option>
+	<option>maj7</option>
+	<option>sus</option>
+	<option>sus2</option>
+	<option>sus4</option>
+		<option>add9</option>
+			<option>add11</option>
+				<option>add13</option>
+	<option>dim</option>
+	<option>+</option>
+</select>
+<select id="chordBass" onchange="drawChord();">
+  <option value="">Blank</option>
+  <option value="/A">/A</option>
+  <option value="/A&#x266f;">/A&#x266f;</option>
+    <option value="/B&#x266d;">/B&#x266d;</option>
+  <option value="/B">/B</option>
+  <option value="/C">/C</option>
+    <option value="/C&#x266f;">/C&#x266f;</option>
+    <option value="/D&#x266d;">/D&#x266d;</option>
+  <option value="/D">/D</option>
+<option value="/D&#x266f;">/D&#x266f;</option>
+    <option value="/E&#x266d;">/E&#x266d;</option>
+  <option value="/E">/E</option>
+  <option value="/E&#x266f;">/E&#x266f;</option>
+    <option value="/F&#x266d;">/F&#x266d;</option>
+  <option value="/D">/F</option>
+  <option value="/F&#x266f;">/F&#x266f;</option>
+    <option value="/G&#x266d;">/G&#x266d;</option>
+  <option value="/G">/G</option>
+  
+  <option value="/G&#x266f;">/G&#x266f;</option>
+  <option value="/A&#x266d;">/A&#x266d;</option>
+  
+</select>
+<br />
+<select id="eString" onchange="drawChord();">
+  <option value="0">E</option>
+  <option value="1">F</option>
+  <option value="2">F&#x266f;/G&#x266d;</option>
+  <option value="3">G</option>
+  <option value="4">G&#x266f;/A&#x266d;</option>
+  <option value="5">A</option>
+  <option value="-1">Don't Play</option>
+</select>
+<select id="aString" onchange="drawChord();">
+  <option value="0">A</option>
+  <option value="1">A&#x266f;/B&#x266d;</option>
+  <option value="2">B</option>
+  <option value="3">C</option>
+  <option value="4">C&#x266f;/D&#x266d;</option>
+  <option value="5">D</option>
+  <option value="-1">Don't Play</option>
+</select>
+<select id="dString" onchange="drawChord();">
+  <option value="0">D</option>
+  <option value="1">D&#x266f;/E&#x266d;</option>
+  <option value="2">E</option>
+  <option value="3">F</option>
+  <option value="4">F&#x266f;/G&#x266d;</option>
+  <option value="5">G</option>
+  <option value="-1">Don't Play</option>
+</select>
+<select id="gString" onchange="drawChord();">
+  <option value="0">G</option>
+  <option value="1">G&#x266f;/A&#x266d;</option>
+
+  <option value="2">A</option>
+  <option value="3">A&#x266f;/B&#x266d;</option>
+  <option value="4">B</option>
+  <option value="5">C</option>
+  <option value="-1">Don't Play</option>
+</select>
+<select id="bString" onchange="drawChord();">
+  <option value="0">B</option>
+  <option value="1">C</option>
+  <option value="2">C&#x266f;/D&#x266d;</option>
+  <option value="3">D</option>
+    <option value="4">D&#x266f;/E&#x266d;</option>
+  <option value="5">E</option>
+  <option value="-1">Don't Play</option>
+</select>
+<select id="e2String" onchange="drawChord();">
+  <option value="0">E</option>
+  <option value="1">F</option>
+  <option value="2">F&#x266f;/G&#x266d;</option>
+  <option value="3">G</option>
+  <option value="4">G&#x266f;/A&#x266d;</option>
+  <option value="5">A</option>
+  <option value="-1">Don't Play</option>
+</select>
+<br />
+<select id="sFret" onchange="drawChord();">
+	<option value="0">0</option>
+	<option value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+	<option value="13">13</option>
+	<option value="14">14</option>
+	<option value="15">15</option>
+</select>
+
+<script>
+
+//w=2.57
+//h=2.99
+//fingering height 0.4
+//fretnumbers 0.21
+//chord 0.97
+	//initialize canvas
+	var c = document.getElementById("canvas"),
+	ctx = c.getContext("2d"),//Create canvas context
+	W = 320,	
+	H = W*100/68.6,
+	chordLetter=H*22.2/100,
+	fingering=H*9.2/100,
+	frets=W*7.6/100,
+	cName="A",
+	cSuffix="",
+	cBass="",
+	startingFret = 0,
+	chordWidth=W*92.4/100;	
+		canvas.width = W;
+		var notes = [12];
+		notes[0] = "A", notes[1] = "A&#x266f;/B&#x266d;",
+		notes[2] = "B",
+		notes[3] = "C",
+		notes[4] = "C&#x266f;/D&#x266d;",
+		notes[5] = "D",
+		notes[6] = "D&#x266f;/E&#x266d;",
+		notes[7] = "E",
+		notes[8] = "F",
+		notes[9] = "F&#x266f;/G&#x266d;",
+		notes[10] = "G",
+		notes[11] = "G&#x266f;/A&#x266d;"
+		;
+//alert(notes[1]);		
+	canvas.height = H;//+chordLetter+fingering;
+	var cw,ch;
+	var e=0,a=0,d=0,g=0,b=0,e2=0;
+	if(W>H)
+	{
+	cw=H/6;
+	}else{
+	cw=chordWidth/6;
+	}
+	ch=cw;
+	drawBackground();
+
+	
+	
+function drawBackground(){
+	ctx.fillStyle = "white";	
+	ctx.fillRect(0,0,W,H);
+		ctx.fillStyle = "black";
+
+		//draw text for chord
+		if((cName.length+cSuffix.length+cBass.length)>5)
+		{
+		ctx.font = chordLetter/2+"px Arial, sans-serif"; 
+		}else{
+		ctx.font = chordLetter+"px Arial, sans-serif"; 
+		}
+ ctx.textAlign = "center"; 
+ ctx.textBaseline = "middle";
+//\u266d for flat, \u266f for sharp 
+// ctx.fillText("A\u266f", W/2, 0+chordLetter/2 );
+
+ ctx.fillText(cName+cSuffix+cBass, W/2, 0+chordLetter/2 );
+ 
+		//draw chord lines
+for(var x=0;x<6;x++){
+	ctx.fillRect(cw*x+frets,chordLetter+fingering,1,ch*6);
+}
+for(var y=0;y<6;y++){
+	ctx.fillRect(0+frets,ch*y+chordLetter+fingering,cw*5,1);
+	if(y==0)
+		ctx.fillRect(0+frets,ch*y+chordLetter+fingering-3,cw*5,1);
+		}
+		drawFingering(0,e);
+		drawFingering(1,a);
+		drawFingering(2,d);
+		drawFingering(3,g);
+		drawFingering(4,b);
+		drawFingering(5,e2);
+		if(startingFret>0){
+			drawFretNumbers();
+		}
+	// save canvas image as data url (png format by default)
+      var dataURL = canvas.toDataURL();
+
+      // set canvasImg image src to dataURL
+      // so it can be saved as an image
+      document.getElementById('canvasImg').src = dataURL;
+
+		}//end drawBackground
+		
+function drawFingering(string, fret)
+{
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+		//e
+//		alert(e + typeof(e));
+	//	alert(e==0);
+		if(fret>0){
+		ctx.arc(ch*string+frets,ch*fret+chordLetter+fingering-ch/2, ch/4, 0, Math.PI*2, false);
+		ctx.fill();
+		}else if(fret==0)
+		{
+		//alert("in");
+		ctx.arc(ch*string+frets,ch*fret+chordLetter+fingering-ch/4, ch/6, 0, Math.PI*2, false);
+		ctx.stroke();
+		ctx.closePath();
+		}else if(fret==-1)
+		{
+				//draw text for chord
+		ctx.font = ch/2+"px Arial, sans-serif"; 
+ ctx.textAlign = "center"; 
+ ctx.textBaseline = "top";
+//\u266d for flat, \u266f for sharp 
+ ctx.fillText("x", ch*string+frets,ch*fret+chordLetter+fingering+ch/2);
+		}
+		ctx.closePath();
+
+}
+
+function drawFretNumbers()
+{
+
+				ctx.beginPath();
+				
+				ctx.fillStyle = "black";
+
+		ctx.font = ch/2+"px Arial, sans-serif"; 
+
+		ctx.textAlign = "center"; 
+ ctx.textBaseline = "top";
+
+ //\u266d for flat, \u266f for sharp 
+ for(var i = 0;i < 6; i++){
+ ctx.fillText((startingFret+i), ch*0+ch/4,ch*(i-1)+chordLetter+fingering+ch*3/4);
+}
+ ctx.closePath();
+ 
+ var ann = "";
+ ann += (notes[(7+startingFret+e)%12]) + " ";
+ ann += (notes[(0+startingFret+a)%12]) + " ";
+ ann += (notes[(5+startingFret+d)%12]) + " ";
+ ann += (notes[(10+startingFret+g)%12]) + " ";
+ ann += (notes[(2+startingFret+b)%12]) + " ";
+ ann += (notes[(7+startingFret+e2)%12]) + " ";
+ document.getElementById("altNoteNames").innerHTML = ann;
+}//end drawFretNumbers
+function drawFingerings()
+{
+		//draw fingerings
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+		//e
+//		alert(e + typeof(e));
+	//	alert(e==0);
+		if(e>0){
+		ctx.arc(ch*0+frets,ch*e+chordLetter+fingering-ch/2, ch/4, 0, Math.PI*2, false);
+		ctx.fill();
+		}else if(e==0)
+		{
+		//alert("in");
+		ctx.arc(ch*0+frets,ch*e+chordLetter+fingering-ch/4, ch/6, 0, Math.PI*2, false);
+		ctx.stroke();
+		ctx.closePath();
+		}else if(e==-1)
+		{
+				//draw text for chord
+		ctx.font = ch/2+"px Arial, sans-serif"; 
+ ctx.textAlign = "center"; 
+ ctx.textBaseline = "top";
+//\u266d for flat, \u266f for sharp 
+ ctx.fillText("x", ch*0+frets,ch*e+chordLetter+fingering+ch/2);
+		}
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.fillStyle = "black";
+		//a
+				if(e>0){
+		ctx.arc(ch*1+frets,ch*a+chordLetter+fingering-ch/2, ch/4, 0, Math.PI*2, false);
+		ctx.fill();
+		}else if(e==0)
+		{
+		//alert("in");
+		ctx.arc(ch*1+frets,ch*a+chordLetter+fingering-ch/4, ch/6, 0, Math.PI*2, false);
+		ctx.stroke();
+		}else if(e==-1)
+		{
+				//draw text for chord
+		ctx.font = ch/2+"px Arial, sans-serif"; 
+ ctx.textAlign = "center"; 
+ ctx.textBaseline = "top";
+//\u266d for flat, \u266f for sharp 
+ ctx.fillText("x", ch*1+frets,ch*a+chordLetter+fingering+ch/2);
+		}
+}
+function drawChord()
+{
+e = parseInt(document.getElementById("eString").value);
+a=parseInt(document.getElementById("aString").value);
+d=parseInt(document.getElementById("dString").value);
+g=parseInt(document.getElementById("gString").value);
+b=parseInt(document.getElementById("bString").value);
+e2=parseInt(document.getElementById("e2String").value);
+startingFret=parseInt(document.getElementById("sFret").value);
+cName=document.getElementById("chordName").value;
+cSuffix=document.getElementById("chordSuffix").value;
+cBass=document.getElementById("chordBass").value;
+drawBackground();
+}//end drawChord
+</script>
+</body>
+
+</html>
